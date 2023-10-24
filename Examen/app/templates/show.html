@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block titulo %}Mostrando Recetas {{ show['modelo'] }}{% endblock titulo %}
+{% block navbar %}
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand"
+        ></a
+      >
+      <div class="d-flex gap-3">
+        
+        <a href="/logout" class="btn btn-sm btn-success">Panel</a>
+        <a href="/logout" class="btn btn-sm btn-danger">Cerrar Sesion</a>
+      </div>
+    </div>
+  </nav>
+  <div >
+    <img src="/static/imagen1.jpg" alt="Descripción de la imagen"style="float: right; margin-left: 10px; width: 800px; height: auto;">
+  </div>
+{% endblock navbar %}
+{% block content %}
+<div class="container">
+    <div class="card" style="width:500px;">
+      
+      <div class="card-body">
+        <h5 class="card-title">$ {{ show['precio'] }}</h5>
+        <p class="card-text"> Receta: {{ show['modelo'] }}</p>
+        <p class="card-text">Dificultad: {{ show['marca'] }}</p>
+        <p class="card-text">Ingredientes: {{ show['ingredientes'] }}</p>
+        <p class="card-text">Descripcion: {{ show['descripcion'] }}</p>
+        <p class="card-text">Pedidos: {{ show['user_id'] }}</p>
+        <a href="/delete/{{  show['id'] }}" class="btn btn-sm btn-danger">Delete</a>
+        
+      </div>
+      
+    </div>
+    
+</div>
+
+{% endblock content %}

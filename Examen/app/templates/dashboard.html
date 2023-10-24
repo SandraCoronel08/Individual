@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block titulo %}
+  Bienvenido {{ session['usuario']['nombre'] }}
+{% endblock titulo %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+      <a class="navbar-brand" style="font-family: 'Anton', sans-serif;">
+          Bienvenido a Compartision de Recetas de Cocina, {{ session['usuario']['nombre'] }}
+      </a>
+      <div class="d-flex gap-3">
+          <a href="/logout" class="btn btn-danger">Cerrar Sesion</a>
+      </div>
+  </div>
+</nav>
+
+{% endblock navbar %}
+
+{% block content %}
+  {% if autos %}
+    <div class="container mt-4" style="background-image: url('imagen1.jpg'); background-size: cover; background-repeat: no-repeat;">
+      <h2 class="mb-4">Recetas</h2>
+      <table class="table table-bordered table-striped text-center">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Ingredientes</th>
+            <th scope="col">Pedidos</th>
+            <th scope="col">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for auto in autos %}
+            <tr>
+              <td>{{ auto['modelo'] }}</td>
+              <td>{{ auto['ingredientes'] }}</td>
+              <td>{{ auto['user_id'] }}</td>
+              <td>
+                <a href="/show/{{ auto['id'] }}" class="btn btn-primary btn-xs d-block">Mostrar</a>
+                <a href="/edit/{{ auto['id'] }}" class="btn btn-warning btn-xs d-block">Editar</a>
+                <a href="/delete/{{ auto['id'] }}" class="btn btn-danger btn-xs d-block">Eliminar</a>
+            </td>
+            
+            
+            
+            
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="/new" class="btn btn-success float-end">Agregar Receta</a>
+    </div>
+    
+  {% else %}
+    <div class="container mt-4" style="background-image: url('imagen1.jpg'); background-size: cover; background-repeat: no-repeat;">
+      <h1>No Hay Datos</h1>
+      <a href="/new" class="btn btn-primary">Agregar Receta</a>
+      
+    </div>
+    
+  {% endif %}
+  <div >
+    <img src="/static/imagen2.jpg" alt="Descripción de la imagen"style="margin-left: 10px; width: 200px; height: auto;">
+  </div>
+{% endblock content %}
