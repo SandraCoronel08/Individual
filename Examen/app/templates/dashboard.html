@@ -10,7 +10,7 @@
           Bienvenido a Compartision de Recetas de Cocina, {{ session['usuario']['nombre'] }}
       </a>
       <div class="d-flex gap-3">
-          <a href="/logout" class="btn btn-danger">Cerrar Sesion</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">Cerrar Sesión</a>
       </div>
   </div>
 </nav>
@@ -18,7 +18,7 @@
 {% endblock navbar %}
 
 {% block content %}
-  {% if autos %}
+  {% if recetas %}
     <div class="container mt-4" style="background-image: url('imagen1.jpg'); background-size: cover; background-repeat: no-repeat;">
       <h2 class="mb-4">Recetas</h2>
       <table class="table table-bordered table-striped text-center">
@@ -31,20 +31,16 @@
           </tr>
         </thead>
         <tbody>
-          {% for auto in autos %}
+          {% for receta in recetas %}
             <tr>
-              <td>{{ auto['modelo'] }}</td>
-              <td>{{ auto['ingredientes'] }}</td>
-              <td>{{ auto['user_id'] }}</td>
+              <td>{{ receta['modelo'] }}</td>
+              <td>{{ receta['ingredientes'] }}</td>
+              <td>{{ receta['user_id'] }}</td>
               <td>
-                <a href="/show/{{ auto['id'] }}" class="btn btn-primary btn-xs d-block">Mostrar</a>
-                <a href="/edit/{{ auto['id'] }}" class="btn btn-warning btn-xs d-block">Editar</a>
-                <a href="/delete/{{ auto['id'] }}" class="btn btn-danger btn-xs d-block">Eliminar</a>
-            </td>
-            
-            
-            
-            
+                <a href="/show/{{ receta['id'] }}" class="btn btn-primary btn-xs d-block">Mostrar</a>
+                <!-- El botón "Editar" ha sido eliminado -->
+                <a href="/delete/{{ receta['id'] }}" class="btn btn-danger btn-xs d-block">Eliminar</a>
+              </td>
             </tr>
           {% endfor %}
         </tbody>
@@ -56,11 +52,11 @@
     <div class="container mt-4" style="background-image: url('imagen1.jpg'); background-size: cover; background-repeat: no-repeat;">
       <h1>No Hay Datos</h1>
       <a href="/new" class="btn btn-primary">Agregar Receta</a>
-      
     </div>
-    
   {% endif %}
-  <div >
-    <img src="/static/imagen2.jpg" alt="Descripción de la imagen"style="margin-left: 10px; width: 200px; height: auto;">
+  <div style="position: relative;">
+    <div style="position: fixed; top: 60px; left: 0; right: 0; bottom: 0; z-index: -1;">
+        <div style="background-image: url('/static/imagen4.jpg'); background-size: cover; background-repeat: no-repeat; width: 100%; height: 100%;"></div>
+    </div>
   </div>
 {% endblock content %}

@@ -12,6 +12,6 @@ class Tabla:
 
     def obtener_todos(cls):
         query = """
-                SELECT * FROM auto
-                JOIN usuario ON auto.user_id = user.id
+                SELECT * FROM receta
+                JOIN usuario ON receta.user_id = user.id
                 """

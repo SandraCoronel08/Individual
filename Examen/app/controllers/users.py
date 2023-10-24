@@ -9,6 +9,17 @@ from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt(app)
 
+@app.route('/pantalla')
+def pantalla():
+    return render_template('pantalla.html')
+
+
+@app.route('/logout')
+def logout():
+    session.pop('usuario', None)  # Elimina la sesión del usuario
+    return redirect(url_for('inicio'))  # Redirige al inicio
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
@@ -92,8 +103,9 @@ def login():
             'correo' : usuario.correo
         }
         print('Se logro iniciar sesion')
+        return redirect(url_for('pantalla')) 
         
     else:
         print('No se logro iniciar sesion')
         return redirect(url_for('inicio'))
-    return redirect(url_for('dashboard'))
+   

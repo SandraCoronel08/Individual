@@ -3,37 +3,87 @@
 {% block navbar %}
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand"
-        ></a
-      >
-      <div class="d-flex gap-3">
-        
-        <a href="/logout" class="btn btn-sm btn-success">Panel</a>
-        <a href="/logout" class="btn btn-sm btn-danger">Cerrar Sesion</a>
-      </div>
+        <a class="navbar-brand"></a>
+        <div class="d-flex gap-3">
+            <a href="/dashboard" class="btn btn-sm btn-success">Panel</a>
+            <a href="/logout" class="btn btn-sm btn-danger">Cerrar Sesion</a>
+        </div>
     </div>
-  </nav>
-  <div >
-    <img src="/static/imagen1.jpg" alt="Descripción de la imagen"style="float: right; margin-left: 10px; width: 800px; height: auto;">
-  </div>
+</nav>
 {% endblock navbar %}
 {% block content %}
-<div class="container">
-    <div class="card" style="width:500px;">
-      
-      <div class="card-body">
-        <h5 class="card-title">$ {{ show['precio'] }}</h5>
-        <p class="card-text"> Receta: {{ show['modelo'] }}</p>
-        <p class="card-text">Dificultad: {{ show['marca'] }}</p>
-        <p class="card-text">Ingredientes: {{ show['ingredientes'] }}</p>
-        <p class="card-text">Descripcion: {{ show['descripcion'] }}</p>
-        <p class="card-text">Pedidos: {{ show['user_id'] }}</p>
-        <a href="/delete/{{  show['id'] }}" class="btn btn-sm btn-danger">Delete</a>
-        
-      </div>
-      
+<div style="
+    margin: 0;
+    padding: 0;
+    background-image: url('/static/robotComida.png'); /* Ruta de la imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+">
+    <div class="container">
+        <div class="card" style="width: 900px;">
+            <div class="card-body">
+                <h5 class="card-title">$ {{ show['precio'] }}</h5>
+                <p class="card-text"> Receta: {{ show['modelo'] }}</p>
+                <p class="card-text">Dificultad: {{ show['marca'] }}</p>
+                <p class="card-text">Ingredientes: {{ show['ingredientes'] }}</p>
+                <p class="card-text">Descripcion: {{ show['descripcion'] }}</p>
+                <p class="card-text">Pedidos: {{ show['user_id'] }}</p>
+                <a href="/delete/{{  show['id'] }}" class="btn btn-sm btn-danger">Delete</a>
+            
+                <!-- Agrega un botón para abrir el modal de envío de receta por WhatsApp -->
+                <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#enviarWhatsAppModal">Enviar Receta por WhatsApp</a>
+            </div>
+        </div>
     </div>
-    
 </div>
+
+<!-- Modal para enviar el mensaje de WhatsApp -->
+<div class="modal fade" id="enviarWhatsAppModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Enviar Receta por WhatsApp</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="enviarWhatsAppForm">
+                    <div class="mb-3">
+                        <label for "numeroTelefono" class="form-label">Número de Teléfono (con código de país):</label>
+                        <input type="text" class="form-control" id="numeroTelefono" name="numeroTelefono" placeholder="Ejemplo: +595123456789">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="enviarWhatsAppButton">Enviar por WhatsApp</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script para manejar el envío de WhatsApp -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const enviarWhatsAppButton = document.getElementById("enviarWhatsAppButton");
+        const numeroTelefonoInput = document.getElementById("numeroTelefono");
+
+        enviarWhatsAppButton.addEventListener("click", function() {
+            const numeroTelefono = numeroTelefonoInput.value;
+            const receta = "{{ show['modelo'] }}";
+            const ingredientes = "{{ show['ingredientes'] }}";
+            const descripcion = "{{ show['descripcion'] }}";
+
+            const mensajeWhatsApp = `Receta: ${receta}%0AIngredientes: ${ingredientes}%0ADescripción: ${descripcion}`;
+
+            const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroTelefono}&text=${mensajeWhatsApp}`;
+            window.open(urlWhatsApp);
+        });
+    });
+</script>
 
 {% endblock content %}

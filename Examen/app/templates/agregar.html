@@ -1,44 +1,67 @@
 {% extends 'base.html' %}
 {% block titulo %}Agrega una receta{% endblock titulo %}
+{% block navbar %}
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand"></a>
+        <div class="d-flex gap-3">
+            <a href="/dashboard" class="btn btn-sm btn-success">Panel</a>
+            <a href="/logout" class="btn btn-sm btn-danger">Cerrar Sesion</a>
+        </div>
+    </div>
+</nav>
+{% endblock navbar %}
 {% block content %}
 
-<div class="container">
-    <div class="card" style="width: 28rem; margin: 20px auto 0;">
-      <div class="card-body">
-        <form action="/agregar" method="post" class="mt-4">
-          <div class="mb-3">
-            <label for="precio" class="form-label">Precio</label>
-            <input type="number" id="precio" name="precio" class="form-control" />
-          </div>
-          <div class="mb-3">
-            <label for="modelo" class="form-label">Receta</label>
-            <input type="text" id="modelo" name="modelo" class="form-control" />
-          </div>
-          <div class="mb-3">
-            <label for="marca" class="form-label">Dificultad</label>
-            <input type="text" id="marca" name="marca" class="form-control" />
-          </div>
-          <div class="mb-3">
-            <label for="ingredientes" class="form-label">Ingredientes</label>
-            <input type="text" id="ingredientes" name="ingredientes" class="form-control" />
-          </div>
-          
-          <div class="mb-3">
-            <div class="form-floating">
-              <textarea
-                class="form-control"
-                placeholder="Escribe Una Descripcion"
-                id="descripcion"
-                name="descripcion"
-                style="height: 100px"
-              ></textarea>
-              <label for="floatingTextarea2">Descripcion</label>
+<div style="
+    margin: 0;
+    padding: 0;
+    background-image: url('/static/robotComida.png'); /* Ruta de la imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+">
+    <div class="container">
+        <div class="card" style="width: 28rem;">
+            <div class="card-body">
+                <form action="/agregar" method="post" class="mt-4">
+                    <div class="mb-3">
+                        <label for="precio" class="form-label">Precio</label>
+                        <input type="number" id="precio" name="precio" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="modelo" class="form-label">Receta</label>
+                        <input type="text" id="modelo" name="modelo" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="marca" class="form-label">Dificultad</label>
+                        <input type="text" id="marca" name="marca" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="ingredientes" class="form-label">Ingredientes</label>
+                        <input type="text" id="ingredientes" name="ingredientes" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <textarea
+                                class="form-control"
+                                placeholder="Escribe Una Descripcion"
+                                id="descripcion"
+                                name="descripcion"
+                                style="height: 100px"
+                            ></textarea>
+                            <label for="floatingTextarea2">Descripcion</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-end"> Agregar</button>
+                </form>
             </div>
-          </div>
-          <button type="submit" class="btn btn-primary float-end"> Agregar</button>
-        </form>
-      </div>
+        </div>
     </div>
-  </div>
-  
+</div>
+
 {% endblock content %}

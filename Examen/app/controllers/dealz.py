@@ -1,17 +1,20 @@
 from app import app
 from flask import render_template,request,redirect,url_for,session
+from flask import flash
 
 from app.models.user import User
-from app.models.auto import Auto
+from app.models.receta import Receta
+
+
 
 @app.route('/dashboard')
 def dashboard():
     if "usuario" not in session:
         return redirect(url_for("inicio"))
     
-    todos = Auto.todos()
+    todos = Receta.todos()
     usuario = session["usuario"]
-    return render_template("dashboard.html", usuario=usuario, autos=todos)
+    return render_template("dashboard.html", usuario=usuario, recetas=todos)
 
 @app.route('/new')
 def new():
@@ -38,7 +41,7 @@ def agregar():
         'precio':precio,
         'user_id':user_id
     }
-    resultado = Auto.guardar(datos_vehiculo)
+    resultado = Receta.guardar(datos_vehiculo)
     if resultado:
         print(f"Vehiculo agregado {datos_vehiculo['marca']}")
         return redirect(url_for("dashboard"))
@@ -52,7 +55,7 @@ def show(id):
     data = {
         'id': id
     }
-    show = Auto.uno(data)
+    show = Receta.uno(data)
 
     
     return render_template("show.html", show=show)
@@ -62,7 +65,7 @@ def edit(id):
     data = {
         'id': id
     }
-    edit = Auto.uno(data)
+    edit = Receta.uno(data)
     return render_template("edit.html", edit=edit)
 @app.route('/editar/<int:id>',methods=["POST"])
 def editar(id):
@@ -86,7 +89,7 @@ def editar(id):
         'id':id
     }
 
-    editar_vehiculo = Auto.editar(datos_vehiculo)
+    editar_vehiculo = Receta.editar(datos_vehiculo)
     if editar_vehiculo:
         print(f"Vehiculo editado {datos_vehiculo['marca']}")
         return redirect(url_for("dashboard"))
@@ -99,7 +102,7 @@ def delete(id):
     data = {
         'id':id
     }
-    delete = Auto.borrar(data)
+    delete = Receta.borrar(data)
 
     if delete:
         print(f"Vehiculo eliminado {id}")
